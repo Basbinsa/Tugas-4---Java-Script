@@ -33,5 +33,105 @@
         <div id="containerPilihan"></div>
         <button onclick="proses2()">OK</button>
     </div>
+
+    <div id="step3" class="section hidden">
+        <p>Pilihan :</p>
+        <div id="containerRadio"></div>
+        <button onclick="proses3()">OK</button>
+    </div>
+
+    <div id="step4" class="section hidden">
+        <table>
+            <tr>
+                <td>Email :</td>
+                <td><input type="text" id="inputEmail" placeholder="email@domain.com"></td>
+            </tr>
+        </table>
+        <button onclick="proses4()">OK</button>
+    </div>
+
+    <div id="step5" class="section hidden">
+        <p id="hasilAkhir" style="font-weight: bold; border: 1px solid #000; padding: 15px;"></p>
+    </div>
+
+    <script>
+        let nama, jml, listPilihan = [], pilihanTerpilih, email;
+
+        function proses1() {
+            nama = document.getElementById('inputNama').value;
+            jml = parseInt(document.getElementById('inputJml').value);
+
+            if (!nama || isNaN(jml) || jml <= 0) {
+                alert("Mohon isi Nama dan Jumlah Pilihan dengan benar!");
+                return;
+            }
+
+            const container = document.getElementById('containerPilihan');
+            container.innerHTML = "";
+            for (let i = 1; i <= jml; i++) {
+                container.innerHTML += `
+                    <div>Pilihan ${i} : <input type="text" class="teksPilihan" placeholder="Teks Pilihan ${i}"></div>
+                `;
+            }
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        function proses2() {
+            const inputs = document.querySelectorAll('.teksPilihan');
+            listPilihan = [];
+            let valid = true;
+
+            inputs.forEach(input => {
+                if (!input.value) valid = false;
+                listPilihan.push(input.value);
+            });
+
+            if (!valid) {
+                alert("Semua teks pilihan harus diisi!");
+                return;
+            }
+
+            const container = document.getElementById('containerRadio');
+            container.innerHTML = "";
+            listPilihan.forEach((teks, index) => {
+                container.innerHTML += `
+                    <div>
+                        <input type="radio" name="pilihanFinal" value="${teks}" id="r${index}">
+                        <label for="r${index}">${teks}</label>
+                    </div>
+                `;
+            });
+            document.getElementById('step3').classList.remove('hidden');
+        }
+
+        function proses3() {
+            const terpilih = document.querySelector('input[name="pilihanFinal"]:checked');
+            if (!terpilih) {
+                alert("Silakan pilih salah satu opsi!");
+                return;
+            }
+            pilihanTerpilih = terpilih.value;
+            document.getElementById('step4').classList.remove('hidden');
+        }
+
+        function proses4() {
+            email = document.getElementById('inputEmail').value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+                alert("Format email tidak valid (contoh: nama@domain.com)!");
+                return;
+            }
+
+            tampilkanHasil();
+        }
+        
+        function tampilkanHasil() {
+            const kalimat = `Hallo, Nama saya ${nama}, email ${email} saya mempunyai sejumlah ${jml} pilihan yaitu ${listPilihan.join(', ')}, dan saya memilih ${pilihanTerpilih}`;
+            document.getElementById('hasilAkhir').innerText = kalimat;
+            document.getElementById('step5').classList.remove('hidden');
+        }
     
+    </script>
 </body>
+</html>
