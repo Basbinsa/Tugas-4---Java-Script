@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="id"></html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tugas - JavaScript DOM</title>
+    <title>Tugas 4 - JavaScript DOM</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; }
+        .header img { width: 100px; height: 120px; margin-right: 20px; border: 1px solid #ccc; object-fit: cover; }
         .section { margin-bottom: 20px; padding: 10px; border: 1px dashed #ccc; border-radius: 5px; }
         .hidden { display: none; }
         table { margin-bottom: 10px; }
@@ -14,6 +16,15 @@
     </style>
 </head>
 <body>
+
+    <div class="header">
+        <img src="Screenshot 2026-02-09 180601.png" alt="Foto Mahasiswa">
+        <div>
+            <h2>Tugas 4 - JavaScript</h2>
+            <p>Nama: Bintang Adistya Saputra</p>
+            <p>NIM: 245314039</p>
+        </div>
+    </div>
 
     <div id="step1" class="section">
         <table>
@@ -26,18 +37,18 @@
                 <td><input type="number" id="inputJml" min="1" placeholder="Jml"></td>
             </tr>
         </table>
-        <button onclick="proses1()">OK</button>
+        <button onclick="prosesStep1()">OK</button>
     </div>
 
     <div id="step2" class="section hidden">
         <div id="containerPilihan"></div>
-        <button onclick="proses2()">OK</button>
+        <button onclick="prosesStep2()">OK</button>
     </div>
 
     <div id="step3" class="section hidden">
         <p>Pilihan :</p>
         <div id="containerRadio"></div>
-        <button onclick="proses3()">OK</button>
+        <button onclick="prosesStep3()">OK</button>
     </div>
 
     <div id="step4" class="section hidden">
@@ -47,7 +58,7 @@
                 <td><input type="text" id="inputEmail" placeholder="email@domain.com"></td>
             </tr>
         </table>
-        <button onclick="proses4()">OK</button>
+        <button onclick="prosesStep4()">OK</button>
     </div>
 
     <div id="step5" class="section hidden">
@@ -57,7 +68,7 @@
     <script>
         let nama, jml, listPilihan = [], pilihanTerpilih, email;
 
-        function proses1() {
+        function prosesStep1() {
             nama = document.getElementById('inputNama').value;
             jml = parseInt(document.getElementById('inputJml').value);
 
@@ -76,7 +87,7 @@
             document.getElementById('step2').classList.remove('hidden');
         }
 
-        function proses2() {
+        function prosesStep2() {
             const inputs = document.querySelectorAll('.teksPilihan');
             listPilihan = [];
             let valid = true;
@@ -104,7 +115,7 @@
             document.getElementById('step3').classList.remove('hidden');
         }
 
-        function proses3() {
+        function prosesStep3() {
             const terpilih = document.querySelector('input[name="pilihanFinal"]:checked');
             if (!terpilih) {
                 alert("Silakan pilih salah satu opsi!");
@@ -113,8 +124,8 @@
             pilihanTerpilih = terpilih.value;
             document.getElementById('step4').classList.remove('hidden');
         }
-
-        function proses4() {
+ 
+        function prosesStep4() {
             email = document.getElementById('inputEmail').value;
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -125,13 +136,12 @@
 
             tampilkanHasil();
         }
-        
+
         function tampilkanHasil() {
-            const kalimat = `Hallo, Nama saya ${nama}, email ${email} saya mempunyai sejumlah ${jml} pilihan yaitu ${listPilihan.join(', ')}, dan saya memilih ${pilihanTerpilih}`;
+            const kalimat = `Hallo, nama saya ${nama}, email ${email} saya mempunyai sejumlah ${jml} pilihan yaitu ${listPilihan.join(', ')}, dan saya memilih ${pilihanTerpilih}`;
             document.getElementById('hasilAkhir').innerText = kalimat;
             document.getElementById('step5').classList.remove('hidden');
         }
-    
     </script>
 </body>
 </html>
