@@ -4,20 +4,27 @@ function prosesStep1() {
     nama = document.getElementById('inputNama').value;
     jml = parseInt(document.getElementById('inputJml').value);
 
-        if (!nama || isNaN(jml) || jml <= 0) {
-            alert("Mohon isi Nama dan Jumlah Pilihan dengan benar!");
-            return;
-            }
+    const regexHuruf = /^[a-zA-Z\s]+$/;
 
-        const container = document.getElementById('containerPilihan');
-        container.innerHTML = "";
-        for (let i = 1; i <= jml; i++) {
-            container.innerHTML += `
-                <div>Pilihan ${i} : <input type="text" class="teksPilihan" placeholder="Teks Pilihan ${i}"></div>
-                `;
-            }
-            document.getElementById('step2').classList.remove('hidden');
-        }
+    if (!nama || isNaN(jml) || jml <= 0) {
+        alert("Mohon isi Nama dan Jumlah Pilihan dengan benar!");
+        return;
+    }
+
+    if (!regexHuruf.test(nama)) {
+        alert("Nama hanya boleh berisi huruf tanpa simbol, angka, atau koma!");
+        return; 
+    }
+
+    const container = document.getElementById('containerPilihan');
+    container.innerHTML = "";
+    for (let i = 1; i <= jml; i++) {
+        container.innerHTML += `
+            <div>Pilihan ${i} : <input type="text" class="teksPilihan" placeholder="Teks Pilihan ${i}"></div>
+        `;
+    }
+    document.getElementById('step2').classList.remove('hidden');
+}
 
 function prosesStep2() {
     const inputs = document.querySelectorAll('.teksPilihan');
