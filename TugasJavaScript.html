@@ -4,16 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tugas 4 - JavaScript DOM</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-        .header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; display: flex; align-items: center; }
-        .header img { width: 100px; height: 120px; margin-right: 20px; border: 1px solid #ccc; object-fit: cover; }
-        .section { margin-bottom: 20px; padding: 10px; border: 1px dashed #ccc; border-radius: 5px; }
-        .hidden { display: none; }
-        table { margin-bottom: 10px; }
-        td { padding: 5px; }
-        .error { color: red; font-size: 0.8em; }
-    </style>
+    <link rel="stylesheet" href="Style.css">
+    <script src="JavaScript.js"></script>
+    
 </head>
 <body>
 
@@ -65,83 +58,5 @@
         <p id="hasilAkhir" style="font-weight: bold; border: 1px solid #000; padding: 15px;"></p>
     </div>
 
-    <script>
-        let nama, jml, listPilihan = [], pilihanTerpilih, email;
-
-        function prosesStep1() {
-            nama = document.getElementById('inputNama').value;
-            jml = parseInt(document.getElementById('inputJml').value);
-
-            if (!nama || isNaN(jml) || jml <= 0) {
-                alert("Mohon isi Nama dan Jumlah Pilihan dengan benar!");
-                return;
-            }
-
-            const container = document.getElementById('containerPilihan');
-            container.innerHTML = "";
-            for (let i = 1; i <= jml; i++) {
-                container.innerHTML += `
-                    <div>Pilihan ${i} : <input type="text" class="teksPilihan" placeholder="Teks Pilihan ${i}"></div>
-                `;
-            }
-            document.getElementById('step2').classList.remove('hidden');
-        }
-
-        function prosesStep2() {
-            const inputs = document.querySelectorAll('.teksPilihan');
-            listPilihan = [];
-            let valid = true;
-
-            inputs.forEach(input => {
-                if (!input.value) valid = false;
-                listPilihan.push(input.value);
-            });
-
-            if (!valid) {
-                alert("Semua teks pilihan harus diisi!");
-                return;
-            }
-
-            const container = document.getElementById('containerRadio');
-            container.innerHTML = "";
-            listPilihan.forEach((teks, index) => {
-                container.innerHTML += `
-                    <div>
-                        <input type="radio" name="pilihanFinal" value="${teks}" id="r${index}">
-                        <label for="r${index}">${teks}</label>
-                    </div>
-                `;
-            });
-            document.getElementById('step3').classList.remove('hidden');
-        }
-
-        function prosesStep3() {
-            const terpilih = document.querySelector('input[name="pilihanFinal"]:checked');
-            if (!terpilih) {
-                alert("Silakan pilih salah satu opsi!");
-                return;
-            }
-            pilihanTerpilih = terpilih.value;
-            document.getElementById('step4').classList.remove('hidden');
-        }
- 
-        function prosesStep4() {
-            email = document.getElementById('inputEmail').value;
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (!emailPattern.test(email)) {
-                alert("Format email tidak valid (contoh: nama@domain.com)!");
-                return;
-            }
-
-            tampilkanHasil();
-        }
-
-        function tampilkanHasil() {
-            const kalimat = `Hallo, nama saya ${nama}, email ${email} saya mempunyai sejumlah ${jml} pilihan yaitu ${listPilihan.join(', ')}, dan saya memilih ${pilihanTerpilih}`;
-            document.getElementById('hasilAkhir').innerText = kalimat;
-            document.getElementById('step5').classList.remove('hidden');
-        }
-    </script>
 </body>
 </html>
